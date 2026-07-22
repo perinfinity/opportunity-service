@@ -1,6 +1,5 @@
 package com.perinfinity.volunteering.opportunity.dto;
 
-import com.perinfinity.volunteering.opportunity.model.Opportunity;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,5 +12,5 @@ public class OpportunityResponse {
     Integer itemsPerPage;
     Long totalItems;
     Integer totalPages;
-    List<Opportunity> opportunities;
+    List<OpportunityResponseDto> opportunities;
 }

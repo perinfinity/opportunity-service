@@ -1,11 +1,20 @@
-# Use a slim Java 17 image
+# Stage 1: Build
+FROM maven:3.9-amazoncorretto-17 AS builder
+WORKDIR /app
+
+# Cache dependencies separately from source
+COPY pom.xml .
+RUN mvn dependency:go-offline -B -q
+
+COPY src ./src
+RUN mvn clean package -Dmaven.test.skip=true -B -q
+
+# Stage 2: Run
 FROM amazoncorretto:17-alpine
+WORKDIR /app
 
-# Copy only the JAR file from the build artifact
-COPY target/*.jar opportunity-service.jar
+COPY --from=builder /app/target/*.jar opportunity-service.jar
 
-# Expose container port (adjust if necessary)
-EXPOSE 8080
+EXPOSE 8089
 
-# Set the command to run your application
-ENTRYPOINT ["java", "-jar", "opportunity-service.jar"]
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "opportunity-service.jar"]

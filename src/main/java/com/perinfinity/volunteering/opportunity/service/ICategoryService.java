@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ICategoryService {
     List<Category> getAllCategories();
+
+    Category createCategory(Category category);
+
+    List<Category> createCategories(List<Category> categories);
 }

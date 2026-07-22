@@ -1,64 +1,38 @@
-package com.perinfinity.volunteering.opportunity.model;
+package com.perinfinity.volunteering.opportunity.dto;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.perinfinity.volunteering.opportunity.model.OpportunityStatus;
+import com.perinfinity.volunteering.opportunity.model.WorkType;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
-@Data
+@Getter
 @Builder
-@ToString
-@Document(collection = "opportunities")
-public class Opportunity {
+public class OpportunityResponseDto {
 
-    @Id
     private String id;
-
     private String title;
-
     private String description;
-
     private String location;
-
     private String town;
-
     private LocalDate startDate;
     private LocalDate endDate;
-
     private String requirements;
-
     private Integer orgId;
-
     private String country;
-
     private List<String> targetCountries;
-
+    private List<String> categoryNames;
+    private List<String> skillNames;
     private OpportunityStatus status;
-
     private Integer volunteersNeeded;
-
     private WorkType workType;
-
     private List<String> imageUrls;
-
     private LocalDateTime createdAt;
-
-    private List<Skill> skillsRequired;
-
-    private List<Category> categories;
-
     private LocalDateTime updatedAt;
-
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
-
+    /** Computed urgency tags: NEW, URGENT */
+    private Set<String> tags;
 }
